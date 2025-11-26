@@ -22,14 +22,21 @@ function renderTable(data) {
   table.render(data);
 
   // Attach delete handler
-  table.addDeleteHandler((id) => {
+table.addDeleteHandler((id) => {
+  if (confirm("Are you sure you want to delete this employee?")) {
     employees = employees.filter(emp => emp.id !== id);
     applyFilters(); // reapply filters after delete
-  });
+  }
+});
+
 }
 
 // Search functionality
-searchInput.addEventListener("input", applyFilters);
+let debounceTimer;
+searchInput.addEventListener("input", () => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(applyFilters, 200); // 200ms delay
+});
 
 // Apply search + multi-select filters
 function applyFilters() {
@@ -71,6 +78,7 @@ function setupCompanyFilter() {
   });
 }
 
+
 // Add Employee Modal
 const addBtn = document.getElementById("add-employee-btn");
 const modal = document.getElementById("employee-modal");
@@ -85,7 +93,11 @@ closeModal.addEventListener("click", () => modal.style.display = "none");
 window.addEventListener("click", (e) => {
   if (e.target === modal) modal.style.display = "none";
 });
-
+function addNewEmployee(emp) {
+  employees.push(emp);
+  applyFilters();
+  setupCompanyFilter(); // refresh company checkboxes
+}
 // Handle form submission
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -98,11 +110,12 @@ form.addEventListener("submit", (e) => {
     company: document.getElementById("emp-company").value
   };
 
-  employees.push(newEmp);
-  applyFilters(); // reapply filters + virtual scroll render
+  addNewEmployee(newEmp);      
+
   modal.style.display = "none";
   form.reset();
 });
+
 
 // Export CSV
 document.getElementById("export-csv").addEventListener("click", () => {
