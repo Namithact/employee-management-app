@@ -3,11 +3,11 @@
 ## Overview
 This is a modular Employee Management System built with pure JavaScript (ES6+), Fetch API, and dynamic DOM rendering. 
 
-## Folder Structure
-- `js/api/EmployeeAPI.js` - Fetches data from external API.
-- `js/models/Employee.js` & `EmployeeCollection.js` - Employee data models.
-- `js/components/TableComponent.js` - Table rendering with virtual scrolling.
-- `js/app.js` - Consolidated main application logic including search, filters, add/delete employee, export CSV/JSON.
+## Structure
+- `app.js` contains the main logic, including API fetching, table rendering, search, filters, and modals.
+- `components/`, `models/`, and `api/` folders follow the modular folder structure requested. 
+- `Employee.js` and `EmployeeCollection.js` exist for modular design purposes, though employees are managed as plain objects in `app.js` for simplicity and speed.
+
 - `js/components/SearchComponent.js` & `PaginationComponent.js` - Left empty due to time constraints; main logic is in `app.js`.
 
 ## Features Implemented
